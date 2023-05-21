@@ -39,10 +39,10 @@ class _TimeConversionState extends State<TimeConversion> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Time Converter',
+          'Konversi Waktu',
           style: whiteTextStyle,
         ),
-        backgroundColor: purpleColor,
+        backgroundColor: greenColor,
         automaticallyImplyLeading: false,
       ),
       body: Container(
@@ -109,20 +109,23 @@ class _TimeConversionState extends State<TimeConversion> {
   List<DropdownMenuItem<String>> _getTimezoneDropdownItems() {
     final timezones = ['WIB', 'WITA', 'WIT', 'London', 'New York', 'Tokyo'];
 
-    return timezones.map(
+    return timezones
+        .map(
           (timezone) => DropdownMenuItem<String>(
-        value: timezone,
-        child: Text(
-          timezone,
-          style: blackTextStyle,
-        ),
-      ),
-    ).toList();
+            value: timezone,
+            child: Text(
+              timezone,
+              style: blackTextStyle,
+            ),
+          ),
+        )
+        .toList();
   }
 
   void convertTimezone(DateTime dateTime, String targetTimezone) {
     final targetTime = getTimezoneOffset(targetTimezone);
-    _targetDateTime = dateTime.add(targetTime).subtract(DateTime.now().timeZoneOffset);
+    _targetDateTime =
+        dateTime.add(targetTime).subtract(DateTime.now().timeZoneOffset);
   }
 
   Duration getTimezoneOffset(String timezone) {

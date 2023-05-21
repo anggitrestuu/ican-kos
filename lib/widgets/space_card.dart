@@ -34,7 +34,7 @@ class SpaceCard extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: purpleColor,
+                          color: greenColor,
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(36),
                           ),

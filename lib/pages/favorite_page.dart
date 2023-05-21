@@ -24,17 +24,10 @@ class FavoritePage extends StatelessWidget {
             children: [
               const SizedBox(height: 24),
               //NOTE: TITLE/HEADER
-              Text('My Favorite',
+              Text('Pilihan Favoritmu',
                   style: blackTextStyle.copyWith(
                     fontSize: 24,
                   )),
-              const SizedBox(height: 2),
-              Text(
-                'Pilih kosan yang kamu suka',
-                style: greyTextStyle.copyWith(
-                  fontSize: 16,
-                ),
-              ),
 
               const SizedBox(height: 16),
 

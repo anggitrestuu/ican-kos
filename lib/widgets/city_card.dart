@@ -29,24 +29,24 @@ class CityCard extends StatelessWidget {
                   ),
                   city.isPopular
                       ? Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      width: 50,
-                      height: 30,
-                      decoration: BoxDecoration(
-                          color: purpleColor,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(36),
-                          )),
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/Icon_star.png',
-                          width: 22,
-                          height: 22,
-                        ),
-                      ),
-                    ),
-                  )
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            width: 50,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: greenColor,
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(36),
+                                )),
+                            child: Center(
+                              child: Image.asset(
+                                'assets/images/Icon_star.png',
+                                width: 22,
+                                height: 22,
+                              ),
+                            ),
+                          ),
+                        )
                       : Container()
                 ],
               ),

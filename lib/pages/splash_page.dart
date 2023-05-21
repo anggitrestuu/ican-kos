@@ -51,10 +51,10 @@ class SplashPage extends StatelessWidget {
                         height: 50,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: purpleColor,
+                              backgroundColor: greenColor,
                               shape: const RoundedRectangleBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(17)))),
+                                      BorderRadius.all(Radius.circular(17)))),
                           onPressed: () {
                             Navigator.push(
                                 context,

@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 30),
                     Center(
                       child: Text(
-                        'Find Cozy House to\nStay and Happy',
+                        'Mau cari kos?\nDapatkan infonya dan langsung sewa di IcanKos.',
                         style: blackTextStyle.copyWith(
                           fontSize: 24,
                         ),
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                           border: OutlineInputBorder(),
                           labelText: 'Username',
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: purpleColor),
+                            borderSide: BorderSide(color: greenColor),
                           ),
                         ),
                         style: regularTextStyle,
@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                           border: OutlineInputBorder(),
                           labelText: 'Password',
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: purpleColor),
+                            borderSide: BorderSide(color: greenColor),
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: purpleColor,
+                        backgroundColor: greenColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(17)),
                         ),

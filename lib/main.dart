@@ -82,7 +82,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: purpleColor,
+        selectedItemColor: greenColor,
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
         onTap: _onItemTapped,

@@ -32,10 +32,10 @@ class _MoneyConversionState extends State<MoneyConversion> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Currency Converter',
+          'Konversi Mata Uang',
           style: whiteTextStyle,
         ),
-        backgroundColor: purpleColor,
+        backgroundColor: greenColor,
         automaticallyImplyLeading: false,
       ),
       body: Container(
@@ -44,7 +44,7 @@ class _MoneyConversionState extends State<MoneyConversion> {
           children: [
             TextField(
               decoration: InputDecoration(
-                labelText: 'Amount',
+                labelText: 'Jumlah',
                 labelStyle: blackTextStyle,
               ),
               keyboardType: TextInputType.number,
@@ -52,8 +52,8 @@ class _MoneyConversionState extends State<MoneyConversion> {
               onChanged: (value) {
                 setState(() {
                   _amount = double.tryParse(value) ?? 0.0;
-                  _result =
-                      convertCurrency(_amount, _sourceCurrency, _targetCurrency);
+                  _result = convertCurrency(
+                      _amount, _sourceCurrency, _targetCurrency);
                 });
               },
             ),
@@ -65,12 +65,12 @@ class _MoneyConversionState extends State<MoneyConversion> {
                   value: _sourceCurrency,
                   items: currencies
                       .map((currency) => DropdownMenuItem<String>(
-                    value: currency,
-                    child: Text(
-                      currency,
-                      style: blackTextStyle,
-                    ),
-                  ))
+                            value: currency,
+                            child: Text(
+                              currency,
+                              style: blackTextStyle,
+                            ),
+                          ))
                       .toList(),
                   onChanged: (value) {
                     setState(() {
@@ -82,18 +82,17 @@ class _MoneyConversionState extends State<MoneyConversion> {
                 ),
                 const Text(
                   'to',
-
                 ),
                 DropdownButton<String>(
                   value: _targetCurrency,
                   items: currencies
                       .map((currency) => DropdownMenuItem<String>(
-                    value: currency,
-                    child: Text(
-                      currency,
-                      style: blackTextStyle,
-                    ),
-                  ))
+                            value: currency,
+                            child: Text(
+                              currency,
+                              style: blackTextStyle,
+                            ),
+                          ))
                       .toList(),
                   onChanged: (value) {
                     setState(() {
@@ -141,5 +140,3 @@ TextStyle blackTextStyle = GoogleFonts.poppins(
   color: blackColor,
   fontWeight: FontWeight.w500,
 );
-
-

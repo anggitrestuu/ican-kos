@@ -72,143 +72,145 @@ class _RegisterPageState extends State<RegisterPage> {
         body: _isLoad
             ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 100,
-                ),
-                Text(
-                  'Register',
-                  style: regularTextStyle.copyWith(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextFormField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Username',
-                    ),
-                    style: regularTextStyle,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Username is required';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    obscureText: !_isPasswordVisible,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
-                          });
-                        },
-                        icon: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      Text(
+                        'Register',
+                        style: regularTextStyle.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    style: regularTextStyle,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password is required';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextFormField(
-                    controller: _confirmPasswordController,
-                    obscureText: !_isPasswordVisible,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Confirm Password',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
-                          });
-                        },
-                        icon: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: TextFormField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Username',
+                          ),
+                          style: regularTextStyle,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Username is required';
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                    ),
-                    style: regularTextStyle,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Confirm Password is required';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: purpleColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(17)),
-                    ),
-                    minimumSize: Size(200, 50), // Atur ukuran minimum sesuai kebutuhan
-                  ),
-                  onPressed: _onRegister,
-                  child: const Text(
-                    'Register',
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoginPage()),
-                    );
-                  },
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Already have an account? ',
-                      style: regularTextStyle,
-                      children: [
-                        TextSpan(
-                          text: 'Login',
-                          style: regularTextStyle.copyWith(fontWeight: FontWeight.bold),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: TextFormField(
+                          controller: _passwordController,
+                          obscureText: !_isPasswordVisible,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Password',
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              },
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                            ),
+                          ),
+                          style: regularTextStyle,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password is required';
+                            }
+                            return null;
+                          },
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: TextFormField(
+                          controller: _confirmPasswordController,
+                          obscureText: !_isPasswordVisible,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Confirm Password',
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              },
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                            ),
+                          ),
+                          style: regularTextStyle,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Confirm Password is required';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: greenColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(17)),
+                          ),
+                          minimumSize: Size(
+                              200, 50), // Atur ukuran minimum sesuai kebutuhan
+                        ),
+                        onPressed: _onRegister,
+                        child: const Text(
+                          'Register',
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Already have an account? ',
+                            style: regularTextStyle,
+                            children: [
+                              TextSpan(
+                                text: 'Login',
+                                style: regularTextStyle.copyWith(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                )
-
-              ],
-            ),
-          ),
-        ));
+                ),
+              ));
   }
 }

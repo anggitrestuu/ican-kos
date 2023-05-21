@@ -227,7 +227,7 @@ class _DetailPageState extends State<DetailPage> {
                                                   }
                                                 },
                                                 style: ElevatedButton.styleFrom(
-                                                  backgroundColor: purpleColor,
+                                                  backgroundColor: greenColor,
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -240,7 +240,7 @@ class _DetailPageState extends State<DetailPage> {
                                           ],
                                         )),
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: purpleColor,
+                                    backgroundColor: greenColor,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(17))),

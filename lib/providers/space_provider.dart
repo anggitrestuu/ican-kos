@@ -6,7 +6,7 @@ import '../models/space.dart';
 class SpaceProvider extends ChangeNotifier {
   getRecommendedSpaces() async {
     var result = await http.get(Uri.parse(
-        'https://6469fecf03bb12ac209748db.mockapi.io/api/recommended-spaces/spaces'));
+        'https://6469fecf03bb12ac209748db.mockapi.io/api/recommended-spaces/apartments'));
 
     print(result.statusCode);
     print(result.body);
@@ -24,7 +24,7 @@ class SpaceProvider extends ChangeNotifier {
     space.isFavorite = !space.isFavorite;
 
     var url = Uri.parse(
-        'https://6469fecf03bb12ac209748db.mockapi.io/api/recommended-spaces/spaces/${space.id}');
+        'https://6469fecf03bb12ac209748db.mockapi.io/api/recommended-spaces/apartments/${space.id}');
 
     var response = await http.put(url,
         headers: {'Content-Type': 'application/json'},

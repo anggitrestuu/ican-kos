@@ -20,7 +20,7 @@ class ProfilePage extends StatelessWidget {
           'Profile',
           style: whiteTextStyle,
         ),
-        backgroundColor: purpleColor,
+        backgroundColor: greenColor,
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -44,11 +44,11 @@ class ProfilePage extends StatelessWidget {
           children: [
             const CircleAvatar(
               radius: 60,
-              backgroundImage: AssetImage('assets/noviamanda.jpeg'),
+              backgroundImage: AssetImage('assets/ican.png'),
             ),
             const SizedBox(height: 20),
             Text(
-              'Novi Amanda Puspita Sari',
+              'Muhammad Auwalli Ikhsani',
               style: regularTextStyle.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.normal,
@@ -56,7 +56,7 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              '123200065-TPM A',
+              '123190127 IF E',
               style: regularTextStyle.copyWith(
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
@@ -65,11 +65,14 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               'Cita-cita:',
-              style: regularTextStyle.copyWith(fontSize: 16),
+              style: regularTextStyle.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 10),
             Text(
-              'Hidup tentram dan damai',
+              'Bahagia dunia',
               style: regularTextStyle.copyWith(fontSize: 16),
             ),
             const SizedBox(height: 20),
@@ -82,7 +85,7 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'Sangat menantang, banyak tugas dan keren sih. Harus pinter-pinter bagi waktu aja. Jujur saya blank waktu quiz, OMG gakuad.',
+              'Saya sangat senang bisa mengikuti mata kuliah ini, karena saya bisa belajar banyak hal baru.',
               style: regularTextStyle.copyWith(fontSize: 16),
             ),
             const SizedBox(height: 20),
@@ -95,7 +98,7 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'Semoga kedepannya bisa lebih proaktif mahasiswanya, dan lebih dalam konsep pengajaran untuk teorinya.',
+              'Bismillah, semoga saya bisa lulus dengan nilai yang memuaskan.',
               style: regularTextStyle.copyWith(fontSize: 16),
             ),
           ],

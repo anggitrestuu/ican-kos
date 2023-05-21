@@ -4,11 +4,8 @@ import 'package:bwa_cozy/models/space.dart';
 import 'package:bwa_cozy/theme.dart';
 import 'package:bwa_cozy/widgets/city_card.dart';
 import 'package:bwa_cozy/widgets/space_card.dart';
-import 'package:bwa_cozy/widgets/tips_card.dart';
 import 'package:provider/provider.dart';
 import '../models/city.dart';
-import '../models/tips.dart';
-import 'package:bwa_cozy/main.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -29,13 +26,13 @@ class HomePage extends StatelessWidget {
             children: [
               const SizedBox(height: 24),
               //NOTE: TITLE/HEADER
-              Text('Explore ',
+              Text('Dapatkan infonya dan langsung sewa di IcanKos. ',
                   style: blackTextStyle.copyWith(
                     fontSize: 24,
                   )),
               const SizedBox(height: 2),
               Text(
-                'Mencari kosan yang cozy',
+                'Ditemukan 1868 kos-kosan di sekitar UGM',
                 style: greyTextStyle.copyWith(
                   fontSize: 16,
                 ),
@@ -58,7 +55,7 @@ class HomePage extends StatelessWidget {
                       CityCard(
                         City(
                           id: 1,
-                          name: 'Jakarta',
+                          name: 'Sleman',
                           imageUrl: 'assets/images/city1.png',
                         ),
                       ),
@@ -66,34 +63,34 @@ class HomePage extends StatelessWidget {
                       CityCard(
                         City(
                             id: 2,
-                            name: 'Bandung',
+                            name: 'Yogyakarta',
                             imageUrl: 'assets/images/city2.png',
                             isPopular: true),
                       ),
                       const SizedBox(width: 20),
                       CityCard(City(
                         id: 3,
-                        name: 'Surabaya',
+                        name: 'Bantul',
                         imageUrl: 'assets/images/city3.png',
                       )),
                       const SizedBox(width: 20),
                       CityCard(City(
                         id: 4,
-                        name: 'Palembang',
+                        name: 'Kulon Progo',
                         imageUrl: 'assets/images/city4.png',
                       )),
                       const SizedBox(width: 20),
                       CityCard(
                         City(
                             id: 5,
-                            name: 'Aceh',
+                            name: 'Gunung Kidul',
                             imageUrl: 'assets/images/city5.png',
                             isPopular: true),
                       ),
                       const SizedBox(width: 20),
                       CityCard(City(
                         id: 6,
-                        name: 'Bogor',
+                        name: 'Magelang',
                         imageUrl: 'assets/images/city6.png',
                       )),
                       const SizedBox(width: 20),
@@ -102,7 +99,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 30),
 
               Text(
-                'Recommended Space',
+                'Kosan Popular',
                 style: regularTextStyle.copyWith(
                   fontSize: 16,
                 ),
@@ -136,33 +133,6 @@ class HomePage extends StatelessWidget {
                   }),
 
               const SizedBox(height: 30),
-
-              //NOTE: TIPS & GUIDANCE
-              Text(
-                'Tips & Guidance',
-                style: regularTextStyle.copyWith(
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 30),
-              Column(
-                children: [
-                  TipsCard(Tips(
-                    id: 1,
-                    imageUrl: 'assets/images/tips1.png',
-                    title: 'City Guidelines',
-                    updateAt: '20 Apr',
-                  )),
-                  const SizedBox(height: 20),
-                  TipsCard(Tips(
-                    id: 2,
-                    imageUrl: 'assets/images/tips2.png',
-                    title: 'Jakarta Fairship',
-                    updateAt: '11 Dec',
-                  ))
-                ],
-              ),
-              SizedBox(height: 50 + edge),
             ],
           ),
         ),

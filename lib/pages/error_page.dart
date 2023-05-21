@@ -2,7 +2,6 @@ import 'package:bwa_cozy/pages/home_page.dart';
 import 'package:bwa_cozy/theme.dart';
 import 'package:flutter/material.dart';
 
-
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});
 
@@ -12,7 +11,7 @@ class ErrorPage extends StatelessWidget {
         body: SafeArea(
             bottom: false,
             child:
-            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Center(
                 child: Image.asset(
                   'assets/images/error-404.png',
@@ -41,10 +40,10 @@ class ErrorPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const HomePage()),
-                              (route) => false);
+                          (route) => false);
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: purpleColor,
+                        backgroundColor: greenColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(17))),
                     child: Text('Back to Home',

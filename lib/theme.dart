@@ -7,6 +7,7 @@ Color greyColor = const Color(0xff82868E);
 Color blackColor = const Color(0xff000000);
 Color bgColor = const Color(0xffE5E5E5);
 Color whiteColor = const Color(0xffFFFFFF);
+Color greenColor = const Color(0xff006641);
 
 double edge = 24;
 
@@ -16,7 +17,7 @@ TextStyle blackTextStyle = GoogleFonts.poppins(
 );
 
 TextStyle greyTextStyle =
-GoogleFonts.poppins(color: greyColor, fontWeight: FontWeight.w300);
+    GoogleFonts.poppins(color: greyColor, fontWeight: FontWeight.w300);
 
 TextStyle whiteTextStyle = GoogleFonts.poppins(
   color: whiteColor,
