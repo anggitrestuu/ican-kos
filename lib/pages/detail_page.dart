@@ -79,24 +79,7 @@ class _DetailPageState extends State<DetailPage> {
                                             index: index,
                                             rating: widget.space.rating));
                                   }).toList(),
-                                  /*
-                                    Image.asset('assets/images/Icon_star.png',
-                                        width: 20, height: 20),
-                                    const SizedBox(width: 2),
-                                    Image.asset('assets/images/Icon_star.png',
-                                        width: 20, height: 20),
-                                    const SizedBox(width: 2),
-                                    Image.asset('assets/images/Icon_star.png',
-                                        width: 20, height: 20),
-                                    const SizedBox(width: 2),
-                                    Image.asset('assets/images/Icon_star.png',
-                                        width: 20, height: 20),
-                                    const SizedBox(width: 2),
-                                    Image.asset('assets/images/Icon_star.png',
-                                        width: 20,
-                                        height: 20,
-                                        color: const Color(0xff989BA1)),
-                                        */
+
                                 )
                               ],
                             ),
@@ -155,26 +138,6 @@ class _DetailPageState extends State<DetailPage> {
                                       ),
                                     );
                                   }).toList()
-                                /*
-                                [
-                                  SizedBox(width: edge),
-                                  Image.asset('assets/images/photo1.png',
-                                      width: 110,
-                                      height: 88,
-                                      fit: BoxFit.cover),
-                                  SizedBox(width: edge),
-                                  Image.asset('assets/images/photo2.png',
-                                      width: 110,
-                                      height: 88,
-                                      fit: BoxFit.cover),
-                                  SizedBox(width: edge),
-                                  Image.asset('assets/images/photo3.png',
-                                      width: 110,
-                                      height: 88,
-                                      fit: BoxFit.cover),
-                                  SizedBox(width: edge),
-                                ],
-                                */
                               )),
                           const SizedBox(height: 30),
 

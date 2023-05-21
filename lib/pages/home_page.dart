@@ -1,17 +1,14 @@
-import 'package:bwa_cozy/widgets/bottom_navbar_item.dart';
 import 'package:flutter/material.dart';
-
+import 'package:bwa_cozy/providers/space_provider.dart';
 import 'package:bwa_cozy/models/space.dart';
 import 'package:bwa_cozy/theme.dart';
 import 'package:bwa_cozy/widgets/city_card.dart';
 import 'package:bwa_cozy/widgets/space_card.dart';
 import 'package:bwa_cozy/widgets/tips_card.dart';
 import 'package:provider/provider.dart';
-
 import '../models/city.dart';
 import '../models/tips.dart';
-import '../providers/space_provider.dart';
-
+import 'package:bwa_cozy/main.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -169,35 +166,6 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: Container(
-          height: 65,
-          width: MediaQuery.of(context).size.width - (2 * edge),
-          decoration: BoxDecoration(
-            color: const Color(0xffF6F7F8),
-            borderRadius: BorderRadius.circular(23),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              BottomNavbarItem(
-                imageUrl: 'assets/images/icon_home.png',
-                isActive: true,
-              ),
-              BottomNavbarItem(
-                imageUrl: 'assets/images/icon_email.png',
-                isActive: false,
-              ),
-              BottomNavbarItem(
-                imageUrl: 'assets/images/icon_card.png',
-                isActive: false,
-              ),
-              BottomNavbarItem(
-                imageUrl: 'assets/images/icon_favorit.png',
-                isActive: false,
-              ),
-            ],
-          )),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

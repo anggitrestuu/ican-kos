@@ -1,4 +1,4 @@
-import 'home_page.dart';
+import 'login_page.dart';
 import 'package:bwa_cozy/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +59,7 @@ class SplashPage extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomePage(),
+                                  builder: (context) => const LoginPage(),
                                 ));
                           },
                           child: Text(
