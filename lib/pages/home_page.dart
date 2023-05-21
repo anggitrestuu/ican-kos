@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../models/city.dart';
 import '../models/tips.dart';
 import 'package:bwa_cozy/main.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -28,7 +29,7 @@ class HomePage extends StatelessWidget {
             children: [
               const SizedBox(height: 24),
               //NOTE: TITLE/HEADER
-              Text('Explore Now',
+              Text('Explore ',
                   style: blackTextStyle.copyWith(
                     fontSize: 24,
                   )),
@@ -100,13 +101,15 @@ class HomePage extends StatelessWidget {
                   )),
               const SizedBox(height: 30),
 
-              //NOTE: RECOMMENDED SPACE
               Text(
                 'Recommended Space',
                 style: regularTextStyle.copyWith(
                   fontSize: 16,
                 ),
               ),
+
+              const SizedBox(height: 16),
+
               const SizedBox(height: 16),
 
               FutureBuilder(

@@ -4,11 +4,11 @@ import 'package:bwa_cozy/providers/space_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bwa_cozy/pages/profile_page.dart';
-import 'package:bwa_cozy/pages/login_page.dart';
 import 'package:bwa_cozy/pages/money_conversion.dart';
 import 'package:bwa_cozy/pages/time_conversion.dart';
+import 'package:bwa_cozy/pages/favorite_page.dart';
 import 'theme.dart';
-import 'package:bwa_cozy/pages/error_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -34,9 +34,10 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
+    FavoritePage(),
     MoneyConversion(),
     TimeConversion(),
     ProfilePage(),
@@ -58,6 +59,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.attach_money),

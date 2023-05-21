@@ -1,8 +1,10 @@
 import 'package:bwa_cozy/pages/error_page.dart';
+import 'package:bwa_cozy/providers/space_provider.dart';
 import 'package:bwa_cozy/widgets/facility_item.dart';
 import 'package:bwa_cozy/widgets/rating_item.dart';
 import 'package:flutter/material.dart';
 import 'package:bwa_cozy/theme.dart';
+import 'package:provider/provider.dart';
 //import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -18,11 +20,11 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  bool isClicked = false;
-
-  //final Uri url = Uri.parse('https://flutter.dev');
   @override
   Widget build(BuildContext context) {
+    bool isClicked = false;
+    var spaceProvider = Provider.of<SpaceProvider>(context);
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -79,7 +81,6 @@ class _DetailPageState extends State<DetailPage> {
                                             index: index,
                                             rating: widget.space.rating));
                                   }).toList(),
-
                                 )
                               ],
                             ),
@@ -137,8 +138,7 @@ class _DetailPageState extends State<DetailPage> {
                                             fit: BoxFit.cover),
                                       ),
                                     );
-                                  }).toList()
-                              )),
+                                  }).toList())),
                           const SizedBox(height: 30),
 
                           //NOTE: LOCATION
@@ -172,7 +172,7 @@ class _DetailPageState extends State<DetailPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                              const ErrorPage()));
+                                                  const ErrorPage()));
                                     }
                                   },
                                   child: Image.asset(
@@ -230,23 +230,23 @@ class _DetailPageState extends State<DetailPage> {
                                                   backgroundColor: purpleColor,
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
-                                                      BorderRadius.circular(
-                                                          8)),
+                                                          BorderRadius.circular(
+                                                              8)),
                                                 ),
                                                 child: Text('Book',
                                                     style:
-                                                    whiteTextStyle.copyWith(
-                                                        fontSize: 14)))
+                                                        whiteTextStyle.copyWith(
+                                                            fontSize: 14)))
                                           ],
                                         )),
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: purpleColor,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(17))),
+                                            BorderRadius.circular(17))),
                                 child: Text('Book Now',
                                     style:
-                                    whiteTextStyle.copyWith(fontSize: 18)),
+                                        whiteTextStyle.copyWith(fontSize: 18)),
                               )),
                           const SizedBox(height: 40)
                         ],
@@ -268,13 +268,16 @@ class _DetailPageState extends State<DetailPage> {
                         child: Image.asset('assets/images/btn_back.png',
                             width: 40)),
                     InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          var isUpdateFavorite = await spaceProvider
+                              .updateIsFavoriteSpace(widget.space);
+
                           setState(() {
-                            isClicked = !isClicked;
+                            isClicked = isUpdateFavorite;
                           });
                         },
                         child: Image.asset(
-                            isClicked
+                            widget.space.isFavorite
                                 ? 'assets/images/btn_wishlist_filled.png'
                                 : 'assets/images/btn_wishlist.png',
                             width: 40))

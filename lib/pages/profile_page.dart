@@ -17,7 +17,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Currency Converter',
+          'Profile',
           style: whiteTextStyle,
         ),
         backgroundColor: purpleColor,
