@@ -37,10 +37,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    ErrorPage(),
     MoneyConversion(),
     TimeConversion(),
-
+    ProfilePage(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -61,13 +60,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.money),
-            label: 'Money',
+            icon: Icon(Icons.attach_money),
+            label: 'Currency',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.watch),
+            icon: Icon(Icons.access_time),
             label: 'Time',
           ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.favorite),
+          //   label: 'Favorite',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',

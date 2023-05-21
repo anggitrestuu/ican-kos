@@ -114,9 +114,7 @@ class HomePage extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       var data = snapshot.data as List<Space>;
-
                       int index = 0;
-
                       return Column(
                         children: data.map((item) {
                           index++;

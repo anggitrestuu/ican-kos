@@ -1,164 +1,103 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
+import 'package:bwa_cozy/theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TimeConversion extends StatefulWidget {
   const TimeConversion({Key? key}) : super(key: key);
 
   @override
-  _TimeConversionState createState() => _TimeConversionState();
+  State<TimeConversion> createState() => _TimeConversionState();
 }
 
 class _TimeConversionState extends State<TimeConversion> {
-  List<String> listWaktuBagian = <String>['WIB', 'WITA', 'WIT', 'UTC', 'JST'];
-  late String waktuBagianAwal = listWaktuBagian.first;
-  late String waktuBagianTujuan = listWaktuBagian.first;
-  late String waktuAwalString;
-  late String waktuTujuanString;
-  late Timer timer;
+  String _targetTimezone = 'WIT';
+  DateTime _sourceDateTime = DateTime.now();
+  DateTime _targetDateTime = DateTime.now();
 
   @override
   void initState() {
-    waktuAwalString = _formatDateTime(DateTime.now());
-    waktuTujuanString = waktuAwalString;
-    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) => _getTime());
     super.initState();
+    _startTimer();
   }
 
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
+  void _startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) return;
+      setState(() {
+        _sourceDateTime = DateTime.now();
+        convertTimezone(_sourceDateTime, _targetTimezone);
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+
     return Scaffold(
-      body: Center(
+      appBar: AppBar(
+        title: Text(
+          'Time Converter',
+          style: whiteTextStyle,
+        ),
+        backgroundColor: purpleColor,
+        automaticallyImplyLeading: false,
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'Pilih Waktu',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.shade400,
-                    ),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                  child: StreamBuilder<Object>(
-                    stream: Stream.periodic(const Duration(seconds: 1), (i) => i),
-                    builder: (context, snapshot) {
-                      return Text(
-                        _formatDateTime(DateTime.now()),
-                        style: const TextStyle(fontSize: 25, fontFamily: 'Poppins'),
-                      );
-                    },
-                  ),
+                Text(
+                  'Waktu Lokal',
+                  style: blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  width: 10,
+                SizedBox(height: 8),
+                Text(
+                  dateFormat.format(_sourceDateTime),
+                  style: blackTextStyle.copyWith(fontSize: 20),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(right: 8, left: 8),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.shade400,
-                    ),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                  child: DropdownButton<String>(
-                    underline: Container(),
-                    value: waktuBagianAwal,
-                    elevation: 16,
-                    onChanged: (String? value) {
-                      setState(() {
-                        waktuBagianAwal = value!;
-                        _updateWaktuTujuan();
-                      });
-                    },
-                    items: listWaktuBagian
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(
-                            fontSize: 25,
-                            fontFamily: 'Poppins',
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                )
               ],
             ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            const SizedBox(height: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.shade400,
-                    ),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    child: Text(
-                      waktuTujuanString,
-                      key: ValueKey<String>(waktuTujuanString),
-                      style: const TextStyle(fontSize: 25, fontFamily: 'Poppins'),
-                    ),
-                  ),
+                Text(
+                  'Target Timezone',
+                  style: blackTextStyle.copyWith(fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  width: 10,
+                SizedBox(height: 8),
+                DropdownButton<String>(
+                  value: _targetTimezone,
+                  items: _getTimezoneDropdownItems(),
+                  onChanged: (value) {
+                    setState(() {
+                      _targetTimezone = value ?? 'WIT';
+                      convertTimezone(_sourceDateTime, _targetTimezone);
+                    });
+                  },
                 ),
-                Container(
-                  padding: const EdgeInsets.only(right: 8, left: 8),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey.shade400,
-                    ),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                  child: DropdownButton<String>(
-                    underline: Container(),
-                    value: waktuBagianTujuan,
-                    elevation: 16,
-                    onChanged: (String? value) {
-                      setState(() {
-                        waktuBagianTujuan = value!;
-                        _updateWaktuTujuan();
-                      });
-                    },
-                    items: listWaktuBagian
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(
-                            fontSize: 25,
-                            fontFamily: 'Poppins',
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                )
+              ],
+            ),
+            const SizedBox(height: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Waktu Target',
+                  style: blackTextStyle.copyWith(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  dateFormat.format(_targetDateTime),
+                  style: blackTextStyle.copyWith(fontSize: 20),
+                ),
               ],
             ),
           ],
@@ -167,42 +106,49 @@ class _TimeConversionState extends State<TimeConversion> {
     );
   }
 
-  void _getTime() {
-    final DateTime now = DateTime.now();
-    final String formattedDateTime = _formatDateTime(now);
-    setState(() {
-      waktuAwalString = formattedDateTime;
-    });
+  List<DropdownMenuItem<String>> _getTimezoneDropdownItems() {
+    final timezones = ['WIB', 'WITA', 'WIT', 'London', 'New York', 'Tokyo'];
+
+    return timezones.map(
+          (timezone) => DropdownMenuItem<String>(
+        value: timezone,
+        child: Text(
+          timezone,
+          style: blackTextStyle,
+        ),
+      ),
+    ).toList();
   }
 
-  void _updateWaktuTujuan() {
-    final DateTime waktuAwal = DateTime.now();
-    DateTime waktuTujuan;
+  void convertTimezone(DateTime dateTime, String targetTimezone) {
+    final targetTime = getTimezoneOffset(targetTimezone);
+    _targetDateTime = dateTime.add(targetTime).subtract(DateTime.now().timeZoneOffset);
+  }
 
-    switch (waktuBagianTujuan) {
-      case 'WITA':
-        waktuTujuan = waktuAwal.subtract(const Duration(hours: 1));
-        break;
+  Duration getTimezoneOffset(String timezone) {
+    switch (timezone) {
+      case 'WIB':
+        return const Duration(hours: 7);
       case 'WIT':
-        waktuTujuan = waktuAwal.subtract(const Duration(hours: 2));
-        break;
-      case 'UTC':
-        waktuTujuan = waktuAwal.toUtc();
-        break;
-      case 'JST':
-        waktuTujuan = waktuAwal.toUtc().add(const Duration(hours: 9));
-        break;
+        return const Duration(hours: 9);
+      case 'WITA':
+        return const Duration(hours: 8);
+      case 'London':
+        return Duration.zero;
+      case 'New York':
+        return const Duration(hours: -4);
+      case 'Tokyo':
+        return const Duration(hours: 9);
       default:
-        waktuTujuan = waktuAwal;
+        return Duration.zero;
     }
-
-    final String formattedDateTime = _formatDateTime(waktuTujuan);
-    setState(() {
-      waktuTujuanString = formattedDateTime;
-    });
   }
 
-  String _formatDateTime(DateTime dateTime) {
-    return DateFormat('dd/MM/yyyy kk:mm:ss').format(dateTime);
+  @override
+  void dispose() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      timer.cancel();
+    });
+    super.dispose();
   }
 }

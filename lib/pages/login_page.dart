@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:bcrypt/bcrypt.dart';
 import 'register_page.dart';
 import 'package:bwa_cozy/data/database.dart';
 import 'package:bwa_cozy/main.dart';
 import 'home_page.dart';
+import 'package:bwa_cozy/theme.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -18,11 +21,28 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   bool _isLoad = false;
   bool _isPasswordVisible = false;
+  bool isLoggedIn = false;
+  late SharedPreferences _prefs;
 
   @override
   void initState() {
     super.initState();
+    initializePreferences();
     _isPasswordVisible = false;
+    checkLoginStatus();
+  }
+
+  Future<void> initializePreferences() async {
+    _prefs = await SharedPreferences.getInstance();
+  }
+
+  void checkLoginStatus() async {
+    isLoggedIn = _prefs.getBool('isLoggedIn') ?? false;
+    if (isLoggedIn) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => const HomePage(),
+      ));
+    }
   }
 
   void _onLogin() async {
@@ -34,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
       final String password = _passwordController.text;
 
       final List<Map<String, dynamic>> result =
-          await DatabaseHelper.instance.selectUser(username);
+      await DatabaseHelper.instance.selectUser(username);
 
       if (result.isNotEmpty) {
         final String hashedPassword = result[0]['password'];
@@ -46,6 +66,9 @@ class _LoginPageState extends State<LoginPage> {
               content: Text('Login Success'),
             ),
           );
+          // Set isLoggedIn to true in Shared Preferences
+          await _prefs.setBool('isLoggedIn', true);
+
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -78,87 +101,123 @@ class _LoginPageState extends State<LoginPage> {
       key: _scaffoldKey,
       body: _isLoad
           ? const Center(
-              child: CircularProgressIndicator(),
-            )
+        child: CircularProgressIndicator(),
+      )
           : SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 100),
-                    const Text(
-                      'Login',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        controller: _usernameController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Username',
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Username is required';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: TextFormField(
-                        controller: _passwordController,
-                        obscureText: !_isPasswordVisible,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: 'Password',
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _isPasswordVisible = !_isPasswordVisible;
-                              });
-                            },
-                            icon: Icon(
-                              _isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                            ),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Password is required';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _onLogin,
-                      child: const Text('Login'),
-                    ),
-                    const SizedBox(height: 20),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RegisterPage(),
-                          ),
-                        );
-                      },
-                      child: const Text('Register'),
-                    ),
-                  ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const SizedBox(height: 100),
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: Image.asset('assets/images/logo.png'),
+              ),
+              const SizedBox(height: 30),
+              Center(
+                child: Text(
+                  'Find Cozy House to\nStay and Happy',
+                  style: blackTextStyle.copyWith(
+                    fontSize: 24,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
+
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Username',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: purpleColor),
+                    ),
+                  ),
+                  style: regularTextStyle,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Username is required';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextFormField(
+                  controller: _passwordController,
+                  obscureText: !_isPasswordVisible,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: purpleColor),
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                      icon: Icon(
+                        _isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                    ),
+                  ),
+                  style: regularTextStyle,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Password is required';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: purpleColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(17)),
+                  ),
+                  minimumSize: Size(200, 50),
+                ),
+                onPressed: _onLogin,
+                child: const Text('LOGIN'),
+              ),
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterPage()),
+                  );
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Don\'t have an account? ',
+                    style: regularTextStyle,
+                    children: [
+                      TextSpan(
+                        text: 'Register',
+                        style: regularTextStyle.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

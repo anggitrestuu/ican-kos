@@ -1,203 +1,145 @@
 import 'package:flutter/material.dart';
+import 'package:bwa_cozy/theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MoneyConversion extends StatefulWidget {
   const MoneyConversion({Key? key}) : super(key: key);
 
   @override
-  _MoneyConversionState createState() => _MoneyConversionState();
+  State<MoneyConversion> createState() => _MoneyConversionState();
 }
 
 class _MoneyConversionState extends State<MoneyConversion> {
-  late double _input;
-  late double _output;
-  // currency IDR, USD, EUR, JPY
-  late String _currencyInput;
-  late String _currencyOutput;
-  late String _result;
-
-  final TextEditingController _inputController = TextEditingController();
+  ConversionType _conversionType = ConversionType.currency;
+  double _amount = 0.0;
+  double _result = 0.0;
+  String _sourceCurrency = 'IDR';
+  String _targetCurrency = 'USD';
+  final _textEditingController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _input = 0;
-    _currencyInput = 'IDR';
-    _currencyOutput = 'IDR';
-    _result = '';
-  }
-
-  void _onInputChanged(String value) {
-    setState(() {
-      _input = double.tryParse(value) ?? 0;
-    });
-  }
-
-  void _onCurrencyInputChanged(String? value) {
-    setState(() {
-      _currencyInput = value ?? 'IDR';
-    });
-  }
-
-  void _onCurrencyOutputChanged(String? value) {
-    setState(() {
-      _currencyOutput = value ?? 'IDR';
-    });
-  }
-
-  void _convert() {
-    setState(() {
-      switch (_currencyInput) {
-        case 'IDR':
-          switch (_currencyOutput) {
-            case 'IDR':
-              _output = _input;
-              break;
-            case 'USD':
-              _output = _input / 14200;
-              break;
-            case 'EUR':
-              _output = _input / 17000;
-              break;
-            case 'JPY':
-              _output = _input / 130;
-              break;
-          }
-          break;
-        case 'USD':
-          switch (_currencyOutput) {
-            case 'IDR':
-              _output = _input * 14200;
-              break;
-            case 'USD':
-              _output = _input;
-              break;
-            case 'EUR':
-              _output = _input * 0.85;
-              break;
-            case 'JPY':
-              _output = _input * 110;
-              break;
-          }
-          break;
-        case 'EUR':
-          switch (_currencyOutput) {
-            case 'IDR':
-              _output = _input * 17000;
-              break;
-            case 'USD':
-              _output = _input * 1.17;
-              break;
-            case 'EUR':
-              _output = _input;
-              break;
-            case 'JPY':
-              _output = _input * 130;
-              break;
-          }
-          break;
-        case 'JPY':
-          switch (_currencyOutput) {
-            case 'IDR':
-              _output = _input * 130;
-              break;
-            case 'USD':
-              _output = _input * 0.0091;
-              break;
-            case 'EUR':
-              _output = _input * 0.0077;
-              break;
-            case 'JPY':
-              _output = _input;
-              break;
-          }
-          break;
-      }
-      _result = _output.toStringAsFixed(2);
+    _textEditingController.addListener(() {
+      setState(() {
+        _amount = double.tryParse(_textEditingController.text) ?? 0.0;
+      });
     });
   }
 
   @override
-  // make dropdown button without array looping
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Money Conversion'),
+        title: Text(
+          'Currency Converter',
+          style: whiteTextStyle,
+        ),
+        backgroundColor: purpleColor,
         automaticallyImplyLeading: false,
       ),
       body: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(18),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 20,
-            ),
             TextField(
-              onChanged: _onInputChanged,
-              controller: _inputController,
+              decoration: InputDecoration(
+                labelText: 'Amount',
+                labelStyle: blackTextStyle,
+              ),
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
+              controller: _textEditingController,
+              onChanged: (value) {
+                setState(() {
+                  _amount = double.tryParse(value) ?? 0.0;
+                  _result =
+                      convertCurrency(_amount, _sourceCurrency, _targetCurrency);
+                });
+              },
+            ),
+            const SizedBox(height: 18),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                DropdownButton<String>(
+                  value: _sourceCurrency,
+                  items: currencies
+                      .map((currency) => DropdownMenuItem<String>(
+                    value: currency,
+                    child: Text(
+                      currency,
+                      style: blackTextStyle,
+                    ),
+                  ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _sourceCurrency = value ?? 'USD';
+                      _result = convertCurrency(
+                          _amount, _sourceCurrency, _targetCurrency);
+                    });
+                  },
                 ),
-                labelText: 'Input',
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            DropdownButton<String>(
-              value: _currencyInput,
-              onChanged: _onCurrencyInputChanged,
-              items: const <String>['IDR', 'USD', 'EUR', 'JPY']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value, style: TextStyle(fontSize: 20)),
-                );
-              }).toList(),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            DropdownButton<String>(
-              value: _currencyOutput,
-              onChanged: _onCurrencyOutputChanged,
-              items: const <String>['IDR', 'USD', 'EUR', 'JPY']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value, style: TextStyle(fontSize: 20)),
-                );
-              }).toList(),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-                primary: Colors.red,
-                textStyle: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                const Text(
+                  'to',
+
                 ),
-              ),
-              onPressed: _convert,
-              child: const Text('Convert'),
+                DropdownButton<String>(
+                  value: _targetCurrency,
+                  items: currencies
+                      .map((currency) => DropdownMenuItem<String>(
+                    value: currency,
+                    child: Text(
+                      currency,
+                      style: blackTextStyle,
+                    ),
+                  ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _targetCurrency = value ?? 'EUR';
+                      _result = convertCurrency(
+                          _amount, _sourceCurrency, _targetCurrency);
+                    });
+                  },
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 18),
             Text(
-              _result,
-              style: const TextStyle(fontSize: 20),
+              '$_amount $_sourceCurrency = $_result $_targetCurrency',
+              style: blackTextStyle.copyWith(fontSize: 18),
             ),
           ],
         ),
       ),
     );
   }
+
+  double convertCurrency(
+      double amount, String fromCurrency, String toCurrency) {
+    final rates = {
+      'USD': 1,
+      'IDR': 14823,
+      'EUR': 0.92,
+      'GBP': 0.80,
+      'CAD': 1.21,
+      'BTC': 0.000037,
+    };
+    final sourceRate = rates[fromCurrency] ?? 1.0;
+    final targetRate = rates[toCurrency] ?? 1.0;
+    final exchangeRate = targetRate / sourceRate;
+    return amount * exchangeRate;
+  }
 }
+
+enum ConversionType { currency }
+
+const List<String> currencies = ['IDR', 'USD', 'EUR', 'GBP', 'CAD', 'BTC'];
+
+TextStyle blackTextStyle = GoogleFonts.poppins(
+  color: blackColor,
+  fontWeight: FontWeight.w500,
+);
+
+
